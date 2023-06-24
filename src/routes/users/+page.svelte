@@ -158,7 +158,7 @@
 			</svg>
 			Tambah Excel
 		</Button>
-		<Button gradient color="green" href="/users/register">
+		<Button gradient color="green" href="/users/add">
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				viewBox="0 0 24 24"
