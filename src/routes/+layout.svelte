@@ -269,7 +269,7 @@
 							</svg>
 						</svelte:fragment>
 					</SidebarItem>
-					<!-- {#if userDetail.level === 'ADMIN'}
+					{#if userDetail.level === 'ADMIN'}
 						<SidebarItem
 							label="Report"
 							href="/report"
@@ -294,7 +294,7 @@
 								>
 							</svelte:fragment>
 						</SidebarItem>
-					{/if} -->
+					{/if}
 				</SidebarGroup>
 			</SidebarWrapper>
 		</Sidebar>
