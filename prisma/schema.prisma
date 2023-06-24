@@ -19,7 +19,7 @@ model AuthKey {
   auth_user       AuthUser @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
   @@index([user_id])
-  @@map("key")
+  @@map("auth_key")
 }
 
 model AuthSession {
@@ -30,7 +30,7 @@ model AuthSession {
   user           AuthUser @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
   @@index([user_id])
-  @@map("session")
+  @@map("auth_session")
 }
 
 model AuthUser {
