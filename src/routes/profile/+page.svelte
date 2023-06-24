@@ -95,7 +95,7 @@
 					<span class="text-md font-medium text-gray-900 dark:text-white">:</span>
 					{userDetail.level}
 				</p>
-				{#if userDetail.level === 'SISWA'}
+				<!-- {#if userDetail.level === 'ANGGOTA'}
 					<p class="text-md font-medium text-gray-900 dark:text-white">NIS</p>
 					<p class="text-md text-gray-500 dark:text-gray-400">
 						<span class="text-md font-medium text-gray-900 dark:text-white">:</span>
@@ -120,16 +120,16 @@
 					{:else}
 						<p class="text-md text-gray-500 dark:text-gray-400">
 							<span class="text-md font-medium text-gray-900 dark:text-white">:</span>
-							{userDetail.jurusan}
+							{userDetail?.jurusan}
 						</p>
 					{/if}
 				{:else if userDetail.level === 'PETUGAS'}
 					<p class="text-md font-medium text-gray-900 dark:text-white">NP</p>
 					<p class="text-md text-gray-500 dark:text-gray-400">
 						<span class="text-md font-medium text-gray-900 dark:text-white">:</span>
-						{userDetail.np}
+						{userDetail.np ? userDetail.np : 'Belum update'}
 					</p>
-				{/if}
+				{/if} -->
 			</div>
 		</div>
 	</Card>
@@ -155,17 +155,17 @@
 						<h5 class="mt-2 mb-1 text-xl font-medium text-gray-900 dark:text-white">
 							{userDetail?.nama}
 						</h5>
-						<span class="text-lg text-gray-500 dark:text-gray-400">{userDetail.username}</span>
+						<span class="text-lg text-gray-500 dark:text-gray-400">{userDetail?.username}</span>
 						<div class="mt-2 grid grid-cols-2 gap-2">
 							<p class="text-md font-medium text-gray-900 dark:text-white">Nomor Telepon/WA</p>
-							{#if !userDetail.wa}
+							{#if !userDetail?.wa}
 								<p class="text-md text-gray-500 dark:text-gray-400">
-									<span class="text-md font-medium text-gray-900 dark:text-white">:</span> Belum di Update
+									<span class="text-md font-medium text-gray-900 dark:text-white">:</span> Belum Update
 								</p>
 							{:else}
 								<p class="text-md text-gray-500 dark:text-gray-400">
 									<span class="text-md font-medium text-gray-900 dark:text-white">:</span>
-									{userDetail.wa}
+									{userDetail?.wa}
 								</p>
 							{/if}
 							<p class="text-md font-medium text-gray-900 dark:text-white">Level</p>
@@ -177,7 +177,7 @@
 								<p class="text-md font-medium text-gray-900 dark:text-white">Nomor Anggota</p>
 								<p class="text-md text-gray-500 dark:text-gray-400">
 									<span class="text-md font-medium text-gray-900 dark:text-white">:</span>
-									{userDetail.na}
+									{userDetail.na ? userDetail.na : 'Belum update'}
 								</p>
 							{/if}
 						</div>
@@ -195,7 +195,7 @@
 							name="status"
 							underline
 							size="md"
-							class="mt-1 text-red-800 dark:text-red-800 "
+							class="mt-1 text-primary-800 dark:text-primary-800 "
 							placeholder="Pilih Status Pinjaman"
 							bind:value={Sstatus}
 						>
@@ -207,8 +207,8 @@
 					</div>
 				</div>
 				<Accordion
-					activeClasses="bg-red-100 dark:bg-gray-800 text-red-600 dark:text-white focus:ring-4 focus:ring-red-200 dark:focus:ring-red-800"
-					inactiveClasses="text-gray-500 dark:text-gray-400 hover:bg-red-100 dark:hover:bg-gray-800"
+					activeClasses="bg-primary-100 dark:bg-gray-800 text-primary-600 dark:text-white focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-800"
+					inactiveClasses="text-gray-500 dark:text-gray-400 hover:bg-primary-100 dark:hover:bg-gray-800"
 				>
 					{#if Sstatus}
 						{#each Sstatus === 'wait' ? pinjamanWait : Sstatus === 'ready' ? pinjamanReady : Sstatus === 'borrowed' ? pinjamanBorrowed : Sstatus === 'returned' ? pinjamanReturned : '' as pinjam}
@@ -243,7 +243,7 @@
 									>
 								</p>
 								{#if Math.ceil((pinjam.tanggalTenggat.getTime() - today.getTime()) / (1000 * 60 * 60 * 24)) < 0}
-									<Alert color="red" accent>
+									<Alert color="primary" accent>
 										<span slot="icon"
 											><svg
 												aria-hidden="true"
@@ -275,7 +275,7 @@
 	<form class="flex flex-col space-y-6" action="?/updatePassword" method="POST">
 		<h3 class="text-xl font-medium text-gray-900 dark:text-white">Ubah Password</h3>
 		{#if form?.incorrect}
-			<Alert color="red" dismissable accent>
+			<Alert color="primary" dismissable accent>
 				<span slot="icon"
 					><svg
 						aria-hidden="true"
@@ -296,11 +296,11 @@
 		<Input type="text" value={userDetail.username} name="username" style="display: none" />
 		<Label class="space-y-2">
 			<span>Password Baru</span>
-			<Input type="password" name="password" placeholder="•••••" required />
+			<Input type="password" name="password" placeholder="•••••" requiprimary />
 		</Label>
 		<Label class="space-y-2">
 			<span>konfirmasi password</span>
-			<Input type="password" name="Kpassword" placeholder="•••••" required />
+			<Input type="password" name="Kpassword" placeholder="•••••" requiprimary />
 		</Label>
 		<Button type="submit" class="w-full1" color="primary">Perbarui</Button>
 	</form>
