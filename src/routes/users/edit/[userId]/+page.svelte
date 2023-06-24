@@ -15,8 +15,6 @@
 	} from 'flowbite-svelte';
 	import myImage from '$lib/img/notImage.png';
 	let slevel: string;
-	// let skelas: any;
-	// let sjurusan: any;
 	let files: any;
 	let avatar: any;
 	// let selected: any;
@@ -36,7 +34,6 @@
 
 	const onFileSelected = (e: any) => {
 		let image = e.target.files[0];
-		// let imageGenerated = true;
 		let reader = new FileReader();
 		reader.readAsDataURL(image);
 		reader.onload = (e) => {
@@ -239,8 +236,8 @@
 							/></svg
 						>
 					</span>
-					<span class="font-medium">Siswa</span> wajib mengisi
-					<span class="font-medium">Nomor Induk Siswa</span>
+					<span class="font-medium">Anggota</span> wajib mengisi
+					<span class="font-medium">Nomor Anggota</span>
 				</Alert>
 			{/if}
 

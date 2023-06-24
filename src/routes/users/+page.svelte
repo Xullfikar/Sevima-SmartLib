@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { read, utils } from 'xlsx';
 	// import myImage from './format_user.png';
 	import {
 		Fileupload,
@@ -22,24 +21,6 @@
 	import type { PageData } from './$types.js';
 	import { onDestroy } from 'svelte';
 	import { createSearchStore, searchHandler } from '$lib/stores/search.js';
-
-	// File XLX Fitur
-	let formModal = false;
-	let files: any;
-	let students: any;
-	const onFileSelected = (e: any) => {
-		let selectedFile = e.target.files[0];
-		let fileReader = new FileReader();
-		fileReader.readAsBinaryString(selectedFile);
-		fileReader.onload = (e) => {
-			let data = e.target?.result;
-			let workbook = read(data, { type: 'binary' });
-			workbook.SheetNames.forEach((sheet) => {
-				let student = utils.sheet_to_row_object_array(workbook.Sheets[sheet]);
-				students = JSON.stringify(student);
-			});
-		};
-	};
 
 	export let data: PageData;
 
@@ -131,7 +112,7 @@
 					stroke-linecap="round"
 					stroke-linejoin="round"
 					d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"
-				/>
+				/>nama
 			</svg>
 		</svelte:fragment>
 		Users
@@ -141,23 +122,6 @@
 <div class="flex flex-col gap-3 md:flex-row justify-between items-center mb-4">
 	<p class="text-xl md:text-3xl font-semibold dark:text-white">Daftar Pengguna</p>
 	<div class="">
-		<Button gradient color="green" on:click={() => (formModal = true)}>
-			<svg
-				xmlns="http://www.w3.org/2000/svg"
-				fill="none"
-				viewBox="0 0 24 24"
-				stroke-width="1.5"
-				stroke="currentColor"
-				class="mr-2 -ml-1 w-5 h-5"
-			>
-				<path
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"
-				/>
-			</svg>
-			Tambah Excel
-		</Button>
 		<Button gradient color="green" href="/users/add">
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
@@ -181,7 +145,7 @@
 	<TableHead>
 		<TableHeadCell>Nama Pengguna</TableHeadCell>
 		<TableHeadCell>Username</TableHeadCell>
-		<TableHeadCell>NIS/NP</TableHeadCell>
+		<TableHeadCell>NA/NP</TableHeadCell>
 		<TableHeadCell>Level</TableHeadCell>
 		<TableHeadCell>Aksi</TableHeadCell>
 	</TableHead>
@@ -191,15 +155,15 @@
 				<TableBodyCell>{user.nama}</TableBodyCell>
 				<TableBodyCell>{user.username}</TableBodyCell>
 				<TableBodyCell>
-					{#if user.level === 'SISWA'}
-						{user.nis}
+					{#if user.level === 'ANGGOTA'}
+						{user.na}
 					{:else if user.level === 'PETUGAS'}
 						{user.np}
 					{/if}
 				</TableBodyCell>
 				<TableBodyCell>
-					{#if user.level === 'SISWA'}
-						<Badge large border color="green">Siswa</Badge>
+					{#if user.level === 'ANGGOTA'}
+						<Badge large border color="green">Anggota</Badge>
 					{:else if user.level === 'PETUGAS'}
 						<Badge large border color="yellow">Petugas</Badge>
 					{:else if user.level === 'ADMIN'}
@@ -266,42 +230,3 @@
 		</Button>
 	</ButtonGroup>
 </div>
-
-<!-- Upload File Excel -->
-<Modal bind:open={formModal} size="xs" autoclose={false} class="w-full">
-	<form class="flex flex-col space-y-2" action="?/createUser" method="POST">
-		<div class="flex justify-items-center">
-			<svg
-				xmlns="http://www.w3.org/2000/svg"
-				fill="currentColor"
-				viewBox="0 0 24 24"
-				class="w-8 h-8 text-gray-900 dark:text-white"
-			>
-				<path
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z"
-				/>
-			</svg>
-			<h3 class="text-xl font-medium text-gray-900 dark:text-white ms-3">Tambah Beberapa Siswa</h3>
-		</div>
-		<Label>
-			<span>Format File Excel</span>
-		</Label>
-		<p class="font-medium text-sm">Column 1: Nama</p>
-		<p class="font-medium text-sm">Column 2: NIS</p>
-		<!-- <img src={myImage} alt="format excel user" /> -->
-		<Label class="space-y-2">
-			<span>Upload File Excel</span>
-			<Fileupload
-				name="students"
-				accept=".xls,.xlsx"
-				type="file"
-				bind:files
-				on:change={(e) => onFileSelected(e)}
-			/>
-		</Label>
-		<Input type="text" name="students" value={students} style="display: none" readonly />
-		<Button type="submit" class="w-full">Upload Excel</Button>
-	</form>
-</Modal>
