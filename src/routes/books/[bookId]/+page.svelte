@@ -13,7 +13,7 @@
 		ButtonGroup,
 		InputAddon
 	} from 'flowbite-svelte';
-	import ReadMore from '$lib/components/ReadMore.svelte';
+	import ReadMore from '$lib/component/ReadMore.svelte';
 
 	import type { PageData, ActionData } from './$types.js';
 	export let data: PageData;
