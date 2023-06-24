@@ -1,31 +1,31 @@
-import { OPENAI_KEY } from "$env/static/private";
-import type { ChatCompletionRequestMessage, CreateChatCompletionRequest } from "openai";
-import type { RequestHandler } from "./$types";
-import { getTokens } from "$lib/tokenizer";
-import { json } from "@sveltejs/kit";
+import { OPENAI_KEY } from '$env/static/private'
+import type { CreateChatCompletionRequest, ChatCompletionRequestMessage } from 'openai'
+import type { RequestHandler } from './$types'
+import { getTokens } from '$lib/tokenizer'
+import { json } from '@sveltejs/kit'
 
 export const POST: RequestHandler = async ({ request }) => {
     try {
         if (!OPENAI_KEY) {
-            throw new Error("OPENAI_KEY env variabel not set")
+            throw new Error('OPENAI_KEY env variable not set')
         }
 
-        const requestData = await request.json();
+        const requestData = await request.json()
 
         if (!requestData) {
-            throw new Error("No request data");
+            throw new Error('No request data')
         }
 
-        const reqMessages: ChatCompletionRequestMessage[] = requestData.messages;
+        const reqMessages: ChatCompletionRequestMessage[] = requestData.messages
 
         if (!reqMessages) {
             throw new Error('no messages provided')
         }
 
-        let tokenCount = 0;
+        let tokenCount = 0
 
         reqMessages.forEach((msg) => {
-            const tokens = getTokens(msg.content!)
+            const tokens = getTokens(msg.content)
             tokenCount += tokens
         })
 
@@ -38,17 +38,22 @@ export const POST: RequestHandler = async ({ request }) => {
             body: JSON.stringify({
                 input: reqMessages[reqMessages.length - 1].content
             })
-        });
-
-        const moderationData = await moderationRes.json();
-        const [results] = moderationData.results;
-
-        if (results.flagged) {
-            throw new Error('Query flagged by openai');
+        })
+        if (!moderationRes.ok) {
+            const err = await moderationRes.json()
+            throw new Error(err.error.message)
         }
 
-        const prompt = "Kamu adalah sebuah virtual asisten yang membantu pengguna sebuah web perpustakaan dengan nama SmartLib, nama kamu adalah Xull SmartLib"
-        tokenCount += getTokens(prompt);
+        const moderationData = await moderationRes.json()
+        const [results] = moderationData.results
+
+        if (results.flagged) {
+            throw new Error('Query flagged by openai')
+        }
+
+        const prompt =
+            'You are a virtual assistant for a company called Huntabyte. Your name is Axel Smith'
+        tokenCount += getTokens(prompt)
 
         if (tokenCount >= 4000) {
             throw new Error('Query too large')
@@ -57,7 +62,7 @@ export const POST: RequestHandler = async ({ request }) => {
         const messages: ChatCompletionRequestMessage[] = [
             { role: 'system', content: prompt },
             ...reqMessages
-        ];
+        ]
 
         const chatRequestOpts: CreateChatCompletionRequest = {
             model: 'gpt-3.5-turbo',
@@ -69,7 +74,7 @@ export const POST: RequestHandler = async ({ request }) => {
         const chatResponse = await fetch('https://api.openai.com/v1/chat/completions', {
             headers: {
                 Authorization: `Bearer ${OPENAI_KEY}`,
-                'Content-type': 'apllication/json'
+                'Content-Type': 'application/json'
             },
             method: 'POST',
             body: JSON.stringify(chatRequestOpts)
@@ -77,7 +82,7 @@ export const POST: RequestHandler = async ({ request }) => {
 
         if (!chatResponse.ok) {
             const err = await chatResponse.json()
-            throw new Error(err)
+            throw new Error(err.error.message)
         }
 
         return new Response(chatResponse.body, {
@@ -85,9 +90,8 @@ export const POST: RequestHandler = async ({ request }) => {
                 'Content-Type': 'text/event-stream'
             }
         })
-
-    } catch (error) {
-        console.error(error)
+    } catch (err) {
+        console.error(err)
         return json({ error: 'There was an error processing your request' }, { status: 500 })
     }
-};
+}
