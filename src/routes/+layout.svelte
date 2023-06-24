@@ -80,13 +80,14 @@
 	<Navbar
 		let:hidden
 		let:toggle
-		color="primary"
-		navClass="fixed top-0 left-0 w-full z-10 py-2 shadow-lg dark:shadow-none"
+		navClass="fixed top-0 left-0 w-full z-10 py-2 shadow-lg dark:shadow-none bg-primary-200 dark:bg-primary-900"
 	>
 		<NavHamburger on:click={toggleDrawer} btnClass="ml-3 lg:hidden" />
 		<NavBrand href="/" class="lg:ml-64">
-			<span class="self-center whitespace-nowrap text-xl font-semibold dark:text-red-800 pl-4">
-				Perpus-Telk
+			<span
+				class="self-center whitespace-nowrap text-xl font-semibold text-primary-900 dark:text-primary-50 pl-4"
+			>
+				SmartLib
 			</span>
 		</NavBrand>
 		<Button pill color="light" id="avatar_with_name" class="!p-1 mr-5 md:mr-0">
@@ -97,19 +98,18 @@
 			{/if}
 		</Button>
 		<Dropdown inline triggeredBy="#avatar_with_name">
-			<!-- <div slot="header" class="px-4 py-2">
-				<span class="block text-sm text-gray-900 dark:text-white"> {userDetail.nama} </span>
-				{#if userDetail.level === 'SISWA'}
-					{#if userDetail.kelas}
-						<span class="block text-sm text-gray-900 dark:text-white"> {userDetail.kelas} </span>
-					{:else}
-						<span class="block text-sm text-gray-900 dark:text-white"> Belum Ada Kelas </span>
-					{/if}
-					<span class="block truncate text-sm font-medium"> {userDetail.nis} </span>
-				{:else if userDetail.level === 'PETUGAS'}
+			<div slot="header" class="px-4 py-2">
+				<span class="block text-sm text-gray-900 dark:text-white"> {userDetail?.nama} </span>
+				{#if userDetail?.level === 'ANGGOTA' && userDetail?.na != null}
+					<span class="block truncate text-sm font-medium"> {userDetail.na} </span>
+				{:else if !userDetail?.na}
+					<span class="block truncate text-sm font-medium"> Belum Diupdate </span>
+				{:else if userDetail?.level === 'PETUGAS' && userDetail?.np != null}
 					<span class="block truncate text-sm font-medium"> {userDetail.np} </span>
+				{:else if !userDetail?.np}
+					<span class="block truncate text-sm font-medium"> Belum Diupdate </span>
 				{/if}
-			</div> -->
+			</div>
 			<DropdownItem href="/">Dashboard</DropdownItem>
 			<DropdownItem href="/profile">Profile</DropdownItem>
 			<DropdownItem defaultClass="font-medium py-2 px-4 text-sm"
@@ -130,6 +130,7 @@
 		width="w-64"
 		class="overflow-scroll pb-32"
 		id="sidebar"
+		bg-primary
 	>
 		<div class="flex items-center">
 			<CloseButton on:click={() => (drawerHidden = true)} class="mb-4 dark:text-white lg:hidden" />
@@ -140,8 +141,8 @@
 					<SidebarItem
 						label="Dashboard"
 						href="/"
-						aClass="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-red-100 dark:hover:bg-red-700"
-						activeClass="flex items-center p-2 text-base font-normal text-gray-900 bg-red-200 dark:bg-red-800 rounded-lg dark:text-white hover:bg-red-100 dark:hover:bg-red-700"
+						aClass="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-primary-100 dark:hover:bg-primary-700"
+						activeClass="flex items-center p-2 text-base font-normal text-gray-900 bg-primary-200 dark:bg-primary-800 rounded-lg dark:text-white hover:bg-primary-100 dark:hover:bg-primary-700"
 						on:click={toggleSide}
 						active={activeUrl === `` || activeUrl === 'books'}
 					>
@@ -166,8 +167,8 @@
 						<SidebarItem
 							label="Users"
 							href="/users"
-							aClass="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-red-100 dark:hover:bg-red-700"
-							activeClass="flex items-center p-2 text-base font-normal text-gray-900 bg-red-200 dark:bg-red-800 rounded-lg dark:text-white hover:bg-red-100 dark:hover:bg-red-700"
+							aClass="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-primary-100 dark:hover:bg-primary-700"
+							activeClass="flex items-center p-2 text-base font-normal text-gray-900 bg-primary-200 dark:bg-primary-800 rounded-lg dark:text-white hover:bg-primary-100 dark:hover:bg-primary-700"
 							on:click={toggleSide}
 							active={activeUrl === `users`}
 						>
@@ -191,8 +192,8 @@
 						<SidebarItem
 							label="Categories"
 							href="/category"
-							aClass="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-red-100 dark:hover:bg-red-700"
-							activeClass="flex items-center p-2 text-base font-normal text-gray-900 bg-red-200 dark:bg-red-800 rounded-lg dark:text-white hover:bg-red-100 dark:hover:bg-red-700"
+							aClass="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-primary-100 dark:hover:bg-primary-700"
+							activeClass="flex items-center p-2 text-base font-normal text-gray-900 bg-primary-200 dark:bg-primary-800 rounded-lg dark:text-white hover:bg-primary-100 dark:hover:bg-primary-700"
 							on:click={toggleSide}
 							active={activeUrl === `category`}
 						>
@@ -218,8 +219,8 @@
 						<SidebarItem
 							label="ACC"
 							href="/acc"
-							aClass="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-red-100 dark:hover:bg-red-700"
-							activeClass="flex items-center p-2 text-base font-normal text-gray-900 bg-red-200 dark:bg-red-800 rounded-lg dark:text-white hover:bg-red-100 dark:hover:bg-red-700"
+							aClass="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-primary-100 dark:hover:bg-primary-700"
+							activeClass="flex items-center p-2 text-base font-normal text-gray-900 bg-primary-200 dark:bg-primary-800 rounded-lg dark:text-white hover:bg-primary-100 dark:hover:bg-primary-700"
 							on:click={toggleSide}
 							active={activeUrl === `acc`}
 						>
@@ -246,8 +247,8 @@
 					<SidebarItem
 						label="Profile"
 						href="/profile"
-						aClass="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-red-100 dark:hover:bg-red-700"
-						activeClass="flex items-center p-2 text-base font-normal text-gray-900 bg-red-200 dark:bg-red-800 rounded-lg dark:text-white hover:bg-red-100 dark:hover:bg-red-700"
+						aClass="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-primary-100 dark:hover:bg-primary-700"
+						activeClass="flex items-center p-2 text-base font-normal text-gray-900 bg-primary-200 dark:bg-primary-800 rounded-lg dark:text-white hover:bg-primary-100 dark:hover:bg-primary-700"
 						on:click={toggleSide}
 						active={activeUrl === `profile`}
 					>
@@ -272,8 +273,8 @@
 						<SidebarItem
 							label="Report"
 							href="/report"
-							aClass="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-red-100 dark:hover:bg-red-700"
-							activeClass="flex items-center p-2 text-base font-normal text-gray-900 bg-red-200 dark:bg-red-800 rounded-lg dark:text-white hover:bg-red-100 dark:hover:bg-red-700"
+							aClass="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-primary-100 dark:hover:bg-primary-700"
+							activeClass="flex items-center p-2 text-base font-normal text-gray-900 bg-primary-200 dark:bg-primary-800 rounded-lg dark:text-white hover:bg-primary-100 dark:hover:bg-primary-700"
 							on:click={toggleSide}
 							active={activeUrl === `report`}
 						>

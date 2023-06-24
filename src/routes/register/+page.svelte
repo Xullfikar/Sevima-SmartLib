@@ -21,11 +21,9 @@
 
 <form action="" method="post">
 	<div class="flex items-center h-screen px-5">
-		<div class="mx-auto w-full sm:w-96 bg-primary-200 dark:bg-primary-300 p-5 rounded-3xl">
+		<div class="mx-auto w-full sm:w-96 bg-primary-200 dark:bg-primary-900 p-5 rounded-3xl">
 			<div class="mb-6">
-				<p class="text-3xl font-bold text-primary-800 dark:text-primary-800 text-center">
-					SmartLib
-				</p>
+				<p class="text-3xl font-bold text-primary-900 dark:text-primary-50 text-center">SmartLib</p>
 			</div>
 			<div class="-mt-4 mb-2">
 				{#if form?.missingNama}
@@ -122,11 +120,11 @@
 				{/if}
 			</div>
 			<div class="mb-3">
-				<Label for="nama" class="block mb-2 text-primary-800 dark:text-primary-800">Nama</Label>
+				<Label for="nama" class="block mb-2 text-primary-900 dark:text-primary-50">Nama</Label>
 				<Input id="nama" name="nama" placeholder="Masukkan Nama Lengkap" />
 			</div>
 			<div class="mb-3">
-				<Label for="website-admin" class="block mb-2 text-primary-800 dark:text-primary-800"
+				<Label for="website-admin" class="block mb-2 text-primary-900 dark:text-primary-50"
 					>Username</Label
 				>
 				<ButtonGroup class="w-full">
@@ -148,7 +146,7 @@
 				</ButtonGroup>
 			</div>
 			<div class="mb-3">
-				<Label for="website-admin" class="block mb-2 text-primary-800 dark:text-primary-800"
+				<Label for="website-admin" class="block mb-2 text-primary-900 dark:text-primary-50"
 					>Password</Label
 				>
 				<ButtonGroup class="w-full">
@@ -170,7 +168,7 @@
 				</ButtonGroup>
 			</div>
 			<div class="mb-6">
-				<Label for="website-admin" class="block mb-2 text-primary-800 dark:text-primary-800"
+				<Label for="website-admin" class="block mb-2 text-primary-900 dark:text-primary-50"
 					>Konfirmasi Password</Label
 				>
 				<ButtonGroup class="w-full">
@@ -190,10 +188,10 @@
 					</InputAddon>
 					<Input id="website-admin" type="password" name="kpassword" placeholder="password" />
 				</ButtonGroup>
-				<Helper class="text-sm mt-2 text-primary-800 dark:text-primary-800"
+				<Helper class="text-sm mt-2 text-primary-900 dark:text-primary-50"
 					>Sudah punya akun ? <a
 						href="/login"
-						class="font-medium text-primary-600 hover:underline dark:text-primary-500">Masuk</a
+						class="font-medium text-primary-600 hover:underline dark:text-primary-50">Masuk</a
 					></Helper
 				>
 			</div>

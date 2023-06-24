@@ -21,11 +21,9 @@
 
 <form action="" method="post">
 	<div class="flex items-center h-screen px-5">
-		<div class="mx-auto w-full sm:w-96 bg-primary-200 dark:bg-primary-300 p-5 rounded-3xl">
+		<div class="mx-auto w-full sm:w-96 bg-primary-200 dark:bg-primary-900 p-5 rounded-3xl">
 			<div class="mb-6">
-				<p class="text-3xl font-bold text-primary-800 dark:text-primary-800 text-center">
-					SmartLib
-				</p>
+				<p class="text-3xl font-bold text-primary-900 dark:text-primary-50 text-center">SmartLib</p>
 			</div>
 			{#if form?.noUsername}
 				<div class="-mt-2 mb-3">
@@ -76,7 +74,7 @@
 				</Toast>
 			{/if}
 			<div class="mb-6">
-				<Label for="website-admin" class="block mb-2 text-primary-800 dark:text-primary-800"
+				<Label for="website-admin" class="block mb-2 text-primary-900 dark:text-primary-50"
 					>Username</Label
 				>
 				<ButtonGroup class="w-full">
@@ -99,7 +97,7 @@
 				</ButtonGroup>
 			</div>
 			<div class="mb-6">
-				<Label for="website-admin" class="block mb-2 text-primary-800 dark:text-primary-800"
+				<Label for="website-admin" class="block mb-2 text-primary-900 dark:text-primary-50"
 					>Password</Label
 				>
 				<ButtonGroup class="w-full">
@@ -125,10 +123,10 @@
 						placeholder="password"
 					/>
 				</ButtonGroup>
-				<Helper class="text-sm mt-2 text-primary-800 dark:text-primary-600"
+				<Helper class="text-sm mt-2 text-primary-900 dark:text-primary-50"
 					>Belum punya akun ? <a
 						href="/register"
-						class="font-medium text-primary-600 hover:underline dark:text-primary-500">Daftar</a
+						class="text-primary-900 hover:underline dark:text-primary-50 font-bold">Daftar</a
 					></Helper
 				>
 			</div>
