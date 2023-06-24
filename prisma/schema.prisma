@@ -1,0 +1,111 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model key {
+  id              String  @id @unique
+  hashed_password String?
+  user_id         String
+  primary         Boolean
+  expires         String?
+  user            user    @relation(fields: [user_id], references: [id])
+
+  @@index([user_id])
+  @@map("key")
+}
+
+model session {
+  id             String @id @unique
+  user_id        String
+  active_expires BigInt
+  idle_expires   BigInt
+  user           user   @relation(fields: [user_id], references: [id])
+
+  @@index([user_id])
+  @@map("session")
+}
+
+model user {
+  id                          String       @id
+  nama                        String       @db.VarChar(100)
+  foto                        String?      @db.MediumText
+  username                    String       @unique @db.VarChar(100)
+  wa                          String?      @db.VarChar(20)
+  level                       user_level   @default(ANGGOTA)
+  np                          String?      @db.VarChar(10)
+  na                          String?      @db.VarChar(10)
+  key                         key[]
+  peminjaman                  peminjaman[]
+  peminjaman_penanggung_jawab peminjaman[] @relation("penanggungJawab")
+  session                     session[]
+
+  @@map("user")
+}
+
+model buku {
+  id            Int          @id @default(autoincrement())
+  gambar        String?      @db.MediumText
+  judulBuku     String       @db.VarChar(255)
+  penulis       String       @db.VarChar(255)
+  penerbit      String       @db.VarChar(255)
+  tahunTerbit   DateTime     @db.Date
+  isbn          Int
+  idKategori    Int?
+  jumlahHalaman Int
+  sinopsis      String?      @db.Text
+  stok          Int
+  lokasi        String       @db.VarChar(255)
+  category      category?    @relation(fields: [idKategori], references: [id])
+  peminjaman    peminjaman[]
+
+  @@index([idKategori], map: "buku_idKategori_fkey")
+}
+
+model category {
+  id       Int    @id @default(autoincrement())
+  kategori String @db.VarChar(255)
+  buku     buku[]
+}
+
+model peminjaman {
+  id                  Int               @id @default(autoincrement())
+  bookId              Int
+  peminjamId          String
+  tanggalPeminjaman   DateTime          @db.Date
+  tanggalTenggat      DateTime?         @db.Date
+  tanggalPengembalian DateTime?         @db.Date
+  catatan             String?           @db.Text
+  status              peminjaman_status @default(wait)
+  penanggungJawabId   String?
+  kodeBuku            String?
+  updatedAt           DateTime          @default(now()) @db.Timestamp(0)
+  buku                buku              @relation(fields: [bookId], references: [id])
+  peminjam            user              @relation(fields: [peminjamId], references: [id])
+  penanggungJawab     user?             @relation("penanggungJawab", fields: [penanggungJawabId], references: [id])
+
+  @@index([bookId], map: "peminjaman_bookId_fkey")
+  @@index([peminjamId], map: "peminjaman_peminjamId_fkey")
+  @@index([penanggungJawabId], map: "peminjaman_penanggungJawabId_fkey")
+}
+
+enum user_level {
+  ANGGOTA
+  PETUGAS
+  ADMIN
+}
+
+enum peminjaman_status {
+  wait
+  ready
+  cancel
+  borrowed
+  returned
+}
