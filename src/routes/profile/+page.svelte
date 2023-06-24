@@ -293,7 +293,7 @@
 				<span class="font-medium">Password</span> tidak sesuai
 			</Alert>
 		{/if}
-		<Input type="text" value={userDetail.username} name="username" style="display: none" />
+		<Input type="text" value={userDetail?.username} name="username" style="display: none" />
 		<Label class="space-y-2">
 			<span>Password Baru</span>
 			<Input type="password" name="password" placeholder="•••••" requiprimary />
