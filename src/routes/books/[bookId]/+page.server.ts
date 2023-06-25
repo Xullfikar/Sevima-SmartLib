@@ -122,7 +122,8 @@ export const actions: Actions = {
             return fail(400, { message: 'Gagal meminjam buku' });
         }
 
-        return { success: true };
+        throw redirect(302, '/profile');
+        // return { success: true };
     },
 
     deleteBook: async ({ url }) => {

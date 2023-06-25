@@ -434,7 +434,7 @@
 			name="status"
 			underline
 			size="md"
-			class="mt-1 text-primary-50 dark:text-primary-900 "
+			class="mt-1 text-primary-900 dark:text-primary-900 "
 			placeholder="Pilih Status Pinjaman"
 			bind:value={Sstatus}
 		>

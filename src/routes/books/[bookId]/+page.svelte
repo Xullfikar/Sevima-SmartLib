@@ -170,9 +170,7 @@
 				{:else if userDetail.level === 'ANGGOTA'}
 					<Button
 						disabled={lengthUsed(book.stok, book.id) < 1 ? true : false}
-						shadow="pink"
-						gradient
-						color="purpleToPink"
+						color="primary"
 						on:click={() => (pinjamModal = true)}>Pinjam Buku</Button
 					>
 				{/if}
